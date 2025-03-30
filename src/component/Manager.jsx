@@ -10,7 +10,7 @@ import { IoAddCircle } from "react-icons/io5";
 const Manager = () => {
   const [isPasswordVisible, setIsPasswordVisible] = useState(true);
   const [passwordArray, setpasswordArray] = useState([]);
-  const [form, setform] = useState({ site: "", username: "", passwords: "" , });
+  const [form, setform] = useState({ site: "", username: "", passwords: "", });
 
   const handleChange = (e) =>
     setform({ ...form, [e.target.name]: e.target.value });
@@ -21,21 +21,21 @@ const Manager = () => {
       form.username.length > 3 &&
       form.passwords.length > 3
     ) {
-      setpasswordArray([...passwordArray, {...form, id:uuid4() }]);
+      setpasswordArray([...passwordArray, { ...form, id: uuid4() }]);
       localStorage.setItem(
         "passwords",
-        JSON.stringify([...passwordArray, {...form, id:uuid4() }])
+        JSON.stringify([...passwordArray, { ...form, id: uuid4() }])
       );
 
-    
+
 
       setform({ site: "", username: "", passwords: "" });
-    } 
+    }
   };
 
   const copyText = (text) => {
     navigator.clipboard.writeText(text);
-   
+
 
   };
 
@@ -50,15 +50,15 @@ const Manager = () => {
     if (c) {
       setpasswordArray(passwordArray.filter((item) => item.id !== id));
       localStorage.setItem(
-        "password",
+        "passwords",
         JSON.stringify(passwordArray.filter((item) => item.id !== id))
       );
-     
+
     }
   };
 
   useEffect(() => {
-    let password = localStorage.getItem("password");
+    let password = localStorage.getItem("passwords");
     if (password) {
       setpasswordArray(JSON.parse(password));
     }
@@ -70,17 +70,17 @@ const Manager = () => {
 
   return (
     <>
-     
 
-      <div className="max-w-[1100px] mx-auto flex flex-col items-center m">
-        <h1 className="font-extrabold text-2xl pt-10 text-white mt-3">
-          <span className="text-blue-900">&lt;</span>
+
+      <div className=" flex flex-col mx-10 items-center ">
+        <h1 className="font-extrabold text-2xl pt-10 text-[#F6F1DE] mt-3">
+          <span className="text-black">&lt;</span>
           <span>Pass</span>
-          <span className="text-blue-900">Op</span>
-          <span className="text-white">&gt;</span>
+          <span className="text-black">Op</span>
+          <span className="text-black">&gt;</span>
         </h1>
 
-        <h2 className="text-white">Your Own Password Manager </h2>
+        <h2 className="text-[#F6F1DE] font-mono">Your Own Password Manager </h2>
 
         <input
           onChange={handleChange}
@@ -88,10 +88,10 @@ const Manager = () => {
           type="text"
           name="site"
           placeholder="Enter Website URL"
-          className="w-full my-10 rounded-xl p-1 px-3 bg-blue-50 text-sm border border-blue-900 "
+          className="w-full my-10  py-2 outline-none px-3 bg-white text-sm  "
         />
 
-        <div className="flex gap-5 w-full items-center ">
+        <div className="flex gap-2 md:gap-5 w-full items-center ">
           <input
             onChange={handleChange}
             value={form.username}
@@ -99,8 +99,7 @@ const Manager = () => {
             placeholder="Enter UserName"
             name="username"
             id=""
-            className="border border-blue-900 bg-blue-1
-            50 w-[70%]  rounded-xl p-1  px-3 text-sm "
+            className="w-full   py-2 px-3 outline-none bg-white text-sm  "
           />
 
           <input
@@ -110,7 +109,7 @@ const Manager = () => {
             placeholder="Enter Password"
             name="passwords"
             id=""
-            className="border border-blue-900 bg-blue-50 w-[25%]  rounded-xl p-1  px-3 text-sm "
+            className="w-[60%]   py-2 px-3 outline-none bg-white text-sm  "
           />
 
           <button
@@ -123,21 +122,21 @@ const Manager = () => {
 
         <button
           onClick={savePassword}
-          className="text-white my-5 bg-blue-900 px-4  flex items-center  gap-2 py-2 rounded-xl"
+          className="text-[#3E3F5B] my-5 bg-[#F6F1DE] px-4  flex items-center  gap-2 py-2 rounded-xl"
         >
           <IoAddCircle />
           Add Password
         </button>
       </div>
 
-      <div className="max-w-[1150px] mx-auto my-10">
-        <h2 className="text-white text-2xl font-extrabold my-5">
+      <div className="max-w-[440px] md:max-w-[1290px] md:mx-10 my-10 ">
+        <h2 className="text-white  text-2xl font-mono  my-5">
           Your password
         </h2>
         {passwordArray === 0 && <div>No Password Now</div>}
         {passwordArray !== 0 && (
-          <table className="table-auto w-full rounded-lg overflow-hidden">
-            <thead className="bg-blue-900 text-white">
+          <table className="table-auto w-full overflow-hidden  ">
+            <thead className="bg-white text-[#3E3F5B]">
               <tr>
                 <th className="py-2 ">Site</th>
                 <th className="py-2  ">Username</th>
@@ -145,13 +144,14 @@ const Manager = () => {
                 <th className="py-2  ">Actions</th>
               </tr>
             </thead>
-            <tbody className="bg-blue-200 text-gray-900">
+            <tbody className="bg-[#F6F1DE]   text-gray-900">
               {passwordArray.map((item, index) => (
                 <tr key={index}>
-                  <td className="py-2  border border-blue-950 text-center text-sm ">
-                    <div className="flex justify-between items-center px-1  ">
-                      <div>
-                        <a className=" " href={item.site} target="_blank">
+                  <td className="py-2  border border-black  text-sm ">
+
+                    <div className="flex justify-between    gap-2 md:gap-5 items-center px-1  ">
+                      <div className=" py-2 w-[89px] md:w-[350px] overflow-auto">
+                        <a className="" href={item.site} target="_blank">
                           {item.site}
                         </a>
                       </div>
@@ -162,26 +162,28 @@ const Manager = () => {
                     </div>
                   </td>
 
-                  <td className="py-2  border border-blue-950 text-center  text-sm  ">
-                    <div className="flex justify-between items-center px-1  ">
-                      <div>{item.username}</div>
+                  <td className="py-2    border border-black   text-sm  ">
+                    <div className="flex justify-between  gap-2 md:gap-5  items-center px-1  ">
+                      <div className="py-2  w-[89px] md:w-[350px] overflow-auto">
+                        {item.username}</div>
                       <button onClick={() => copyText(item.username)}>
                         <FaCopy />
                       </button>
                     </div>
                   </td>
 
-                  <td className="py-2  border text-sm border-blue-950 text-center  ">
-                    <div className="flex justify-between items-center  px-1 ">
-                      <div>{item.passwords}</div>
+                  <td className="py-2    border text-sm border-black   ">
+                    <div className="flex justify-between  gap-2 md:gap-5  items-center px-1  ">
+                      <div className=" py-2 w-[89px] md:w-[350px] overflow-auto">
+                        {item.passwords}</div>
                       <button onClick={() => copyText(item.passwords)}>
                         <FaCopy />
                       </button>
                     </div>
                   </td>
 
-                  <td className="py-2 px-4 border border-blue-950 ">
-                    <div className="flex justify-between gap-2 items-center px-1">
+                  <td className="py-2 px-3 border  md:w-32 border-black ">
+                    <div className="flex justify-between gap-2 items-center ">
                       <button
                         onClick={() => {
                           editPassword(item.id);

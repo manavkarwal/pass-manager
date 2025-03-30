@@ -2,6 +2,6 @@
 @tailwind components;
 @tailwind utilities;
 
-body {
-    @apply min-h-screen bg-gradient-to-t from-[#312474] to-[#1c1d20];
-  }
+body{
+  background-color: #3E3F5B;
+}
